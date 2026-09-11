@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design tokens ────────────────────────────────────────── */
+:root {
+  --bg: #0a0e17;          /* deep navy-charcoal */
+  --bg-soft: #111726;
+  --bg-card: #131b2e;
+  --border: #1f2937;
+  --text: #e8edf5;
+  --text-muted: #9aa7bd;
+  --gold: #e8b14b;        /* warm gold — dream / heritage */
+  --gold-soft: #f0c878;
+  --teal: #3fb5a4;        /* muted teal — technology / growth */
+  --teal-soft: #6fd9c9;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: rgba(232, 177, 75, 0.3);
+  color: #fff;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #2a3a55; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: #3a4f6e; }
+
+/* ── Reveal-on-scroll ─────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .starfield canvas { display: none; }
+}
+
+/* ── Utility helpers ──────────────────────────────────────── */
+.text-gradient-gold {
+  background: linear-gradient(120deg, var(--gold-soft), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.text-gradient-teal {
+  background: linear-gradient(120deg, var(--teal-soft), var(--teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card-glow {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 20px 50px -20px rgba(0,0,0,0.6);
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.card-glow:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px rgba(232,177,75,0.25), 0 28px 60px -20px rgba(0,0,0,0.7);
+  border-color: rgba(232,177,75,0.3);
+}
+
+/* Link underline animation */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 100%; height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Chat widget animations */
+@keyframes chat-pop {
+  from { opacity: 0; transform: translateY(12px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.chat-pop { animation: chat-pop 0.3s cubic-bezier(0.16,1,0.3,1); }
+
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.msg-in { animation: msg-in 0.35s ease; }
+
+/* Typing dots */
+@keyframes blink {
+  0%, 60%, 100% { opacity: 0.25; }
+  30% { opacity: 1; }
+}
+.typing-dot { animation: blink 1.2s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Farhan Hero Animations */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-10px) scale(1.01);
+  }
+}
+
+@keyframes fog {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 0.25;
+  }
+
+  50% {
+    transform: translateX(-45%) translateY(-12px) scale(1.15);
+    opacity: 0.5;
+  }
+        }
+
+/* Short cinematic opening used by the merged homepage. */
+@keyframes introFogIn {
+  0% { opacity: 0; transform: scale(.82) translateY(35px); }
+  35% { opacity: .85; }
+  72% { opacity: .55; transform: scale(1.12) translateY(-8px); }
+  100% { opacity: 0; transform: scale(1.3) translateY(-28px); }
+}
+
+@keyframes introNameIn {
+  0% { opacity: 0; transform: translateY(10px); letter-spacing: .5em; }
+  30% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-8px); letter-spacing: .32em; }
+}
+
+.intro-fog { animation: introFogIn 2.2s ease-out forwards; }
+.intro-name { animation: introNameIn 2.2s ease-out forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-fog, .intro-name { animation: none !important; opacity: 1; }
+}
