@@ -641,5 +641,6 @@ export function Home() {
           </Reveal>
         </div>
       </section>
-
+    </>
+  );
 }
