@@ -34,15 +34,10 @@ export function Chatbot() {
     setLoading(true);
 
     try {
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-      if (!supabaseUrl || !anonKey) throw new Error('missing-config');
-
-      const res = await fetch(`${supabaseUrl}/functions/v1/rawi`, {
+      const res = await fetch('/api/rawi', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${anonKey}`,
         },
         body: JSON.stringify({
           messages: history.map((m) => ({ role: m.role, content: m.content })),
